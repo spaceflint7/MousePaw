@@ -14,6 +14,6 @@ Three sets of key may be configured, and selected from the notification icon in 
 
 Portable, single EXE file; configuration settings are saved in a text file in the same folder.
 
-### Download and run [MousePaw.exe](https://github.com/spaceflint7/MousePaw/blob/master/MousePaw.exe)
+### Download and run [MousePaw.exe](https://github.com/spaceflint7/MousePaw/raw/master/MousePaw.exe)
 
 This program borrows its program icon from, and was generally inspired by, [MouseKeys++](https://github.com/DarthBrento/MouseKeysPlusPlus), which can also simulate mouse movement.
