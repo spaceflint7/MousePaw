@@ -6,7 +6,7 @@ namespace MousePaw
     public partial class Form1 : Form
     {
         public bool Initializing;
-        private readonly Timer FlashTimer;
+        private Timer FlashTimer;
         private string FlashSaveText;
 
         public Form1 ()
@@ -25,6 +25,10 @@ namespace MousePaw
                 ? CheckState.Checked : CheckState.Unchecked;
 
             Initializing = false;
+        }
+
+        private void Form1_Load (object sender, EventArgs e)
+        {
             if (Globals.Config.IsAnyKeyDefined())
             {
                 MinimizeAndHide();
@@ -39,7 +43,7 @@ namespace MousePaw
                 int index = 0;
 
                 FlashTimer = new Timer() { Interval = 750 };
-                FlashTimer.Tick += (sender, args) =>
+                FlashTimer.Tick += (sender2, args2) =>
                     TabKeys.Text = texts[(index++) % texts.Length];
                 FlashTimer.Start();
             }
@@ -47,7 +51,7 @@ namespace MousePaw
 
         private void MinimizeAndHide ()
         {
-            WindowState = FormWindowState.Minimized;
+            Hide();
             ShowInTaskbar = false;
             if (Globals.KeySetMenuItem != null)
                 Globals.KeySetMenuItem.Enabled = true;
@@ -55,10 +59,6 @@ namespace MousePaw
 
         public void RestoreAndShow ()
         {
-            WindowState = FormWindowState.Normal;
-            ShowInTaskbar = true;
-            BringToFront();
-
             if (ReferenceEquals(tabControl1.SelectedTab, TabKeys)
                                         && Globals.KeySetMenuItem != null)
             {
@@ -66,6 +66,10 @@ namespace MousePaw
                 KeySetCombo.SelectedIndex =
                     Globals.Config.GetCurrentKeySetIndex() - 1;
             }
+
+            Show();
+            ShowInTaskbar = true;
+            BringToFront();
         }
 
         private void Form1_FormClosing (object sender, FormClosingEventArgs e)
