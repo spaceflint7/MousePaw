@@ -12,7 +12,7 @@ Any of those seven configurable keys can be left unset, if some of the functiona
 
 Three sets of key may be configured, and selected from the notification icon in the Windows taskbar tray.
 
-Portable, single EXE file; configuration settings are saved in a text file in the same folder.
+Portable, single EXE file; configuration settings are saved in a text file in the same folder -- place executable in a __folder with write access__.
 
 ### Download and run [MousePaw.exe](https://github.com/spaceflint7/MousePaw/raw/master/MousePaw.exe)
 

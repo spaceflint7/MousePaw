@@ -108,7 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="iconRedAndWhite.ico" />
-    <None Include="iconRedAndGreen.ico" />
+    <Content Include="iconRedAndGreenLeft.ico" />
+    <Content Include="iconRedAndGreenRight.ico" />
+    <Content Include="iconRedAndGreenMiddle.ico" />
     <Content Include="iconBlackAndWhite.ico" />
   </ItemGroup>
   <ItemGroup>

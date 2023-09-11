@@ -83,9 +83,29 @@ namespace MousePaw.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon WarningIcon {
+        internal static System.Drawing.Icon WarningIconLeft {
             get {
-                object obj = ResourceManager.GetObject("WarningIcon", resourceCulture);
+                object obj = ResourceManager.GetObject("WarningIconLeft", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon WarningIconMiddle {
+            get {
+                object obj = ResourceManager.GetObject("WarningIconMiddle", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon WarningIconRight {
+            get {
+                object obj = ResourceManager.GetObject("WarningIconRight", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

@@ -165,8 +165,8 @@ namespace MousePaw
 
     class IniFile
     {
-        [DllImport("kernel32", CharSet = CharSet.Unicode)]
-        static extern long WritePrivateProfileString (string Section, string Key, string Value, string FilePath);
+        [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
+        static extern bool WritePrivateProfileString (string Section, string Key, string Value, string FilePath);
 
         [DllImport("kernel32", CharSet = CharSet.Unicode)]
         static extern int GetPrivateProfileString (string Section, string Key, string Default, StringBuilder RetVal, int Size, string FilePath);
@@ -192,7 +192,18 @@ namespace MousePaw
         }
 
         public void Write (string section, string key, string value)
-          => WritePrivateProfileString(section, key, value, path);
+        {
+            bool ok = WritePrivateProfileString(section, key, value, path);
+            if (!ok) {
+                int errCode = Marshal.GetLastWin32Error();
+                var errText = Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error()).Message;
+                var line1 = "ERROR! Failed to update ";
+                var line2 = "configuration in file:\n\n" + path;
+                var line3 = $"\n\n{errText} (Win32 error {errCode})";
+                var line4 = "\n\nTry moving program EXE to another folder.";
+                System.Windows.Forms.MessageBox.Show(line1 + line2 + line3 + line4);
+            }
+        }
 
         public void DeleteKey (string section, string key)
           => Write(section, key, null);

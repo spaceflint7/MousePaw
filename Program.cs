@@ -91,19 +91,20 @@ namespace MousePaw
         private static void SetNotifyIconAndText ()
         {
             var NotifyIcon = Globals.NotifyIcon;
-            NotifyIcon.Text = $"{Application.ProductName} - ";
+            var notifyIconText = $"{Application.ProductName} - ";
             if (Globals.Disabled)
             {
                 NotifyIcon.Icon = Properties.Resources.DisableIcon;
-                NotifyIcon.Text += "suspended";
+                notifyIconText += "suspended";
                 NotifyIcon.ContextMenuStrip.Items[0].Text = "Enable";
             }
             else
             {
                 NotifyIcon.Icon = Properties.Resources.EnableIcon;
-                NotifyIcon.Text += "active";
+                notifyIconText += "active";
                 NotifyIcon.ContextMenuStrip.Items[0].Text = "Disable";
             }
+            NotifyIcon.Text = notifyIconText;
         }
 
         //
@@ -288,12 +289,20 @@ namespace MousePaw
                 {
                     // start blinking the icon when any mouse button is
                     // simulated as 'held' for longer than seven seconds
-                    Globals.NotifyIcon.Icon = ((++state[1]) & 1) != 0
-                             ? Properties.Resources.WarningIcon
-                             : Properties.Resources.EnableIcon;
+                    var icon = Properties.Resources.EnableIcon;
+                    if (((++state[1]) & 1) != 0)
+                    {
+                        if (0 != (Globals.BUTTON_IS_HELD & Globals.LeftButtonFlags))
+                            icon = Properties.Resources.WarningIconLeft;
+                        if (0 != (Globals.BUTTON_IS_HELD & Globals.MiddleButtonFlags))
+                            icon = Properties.Resources.WarningIconMiddle;
+                        if (0 != (Globals.BUTTON_IS_HELD & Globals.RightButtonFlags))
+                            icon = Properties.Resources.WarningIconRight;
+                    }
+                    Globals.NotifyIcon.Icon = icon;
                 }
             }
-            else if (state[1] != 0)
+            else if ((state[0] - state[1]) != 0)
             {
                 state[0] = state[1] = 0;
                 Globals.NotifyIcon.Icon = Globals.Disabled
@@ -331,7 +340,7 @@ namespace MousePaw
         }
 
         //
-        //
+        // EnableDisable_Click
         //
 
         private static void EnableDisable_Click (object sender, EventArgs e)
@@ -344,6 +353,7 @@ namespace MousePaw
                     return;
             }
             Globals.Disabled = !Globals.Disabled;
+            ReleaseHeldKeys();
             SetNotifyIconAndText();
         }
 
